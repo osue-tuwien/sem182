@@ -1,0 +1,11 @@
+foreach(page IN ITEMS P V seminit semgrab semrm)
+   execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink 
+   ${CMAKE_INSTALL_PREFIX}/share/man/man3/sem182.3 
+   ${CMAKE_INSTALL_PREFIX}/share/man/man3/${page}.3)
+
+   execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink 
+   ${CMAKE_INSTALL_PREFIX}/share/man/man3/msem182.3 
+   ${CMAKE_INSTALL_PREFIX}/share/man/man3/m${page}.3)
+
+endforeach(page)
+
