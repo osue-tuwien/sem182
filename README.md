@@ -18,3 +18,10 @@ Packaging
 $ cpack -G DEB CPackConfig.make
 $ cpack -G RPM CPackConfig.make
 ```
+
+Man Pages
+---------
+```
+$ pandoc -s -w man sem182.md -o sem182.3
+$ pandoc -s -w man msem182.md -o msem182.3
+```
