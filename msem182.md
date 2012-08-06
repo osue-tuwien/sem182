@@ -16,7 +16,7 @@ mseminit, msemgrab, msemrm, mV, mP - semaphore field convenience operations
     int mV(int semid, int nsems, ...);
     int mP(int semid, int nsems, ...);
     
-    Link with -lmsem182.
+    Link with -lsem182.
 
 # DESCRIPTION
 
