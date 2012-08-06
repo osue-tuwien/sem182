@@ -3,6 +3,7 @@ project (libsem182 C)
 
 set (LIB_VERSION_MAJOR "2")
 set (LIB_VERSION_MINOR "1")
+set (LIB_VERSION_PATCH "1")
 
 include_directories (${CMAKE_SOURCE_DIR})
 
@@ -24,6 +25,7 @@ set (CPACK_PACKAGE_DESCRIPTION_SUMMARY
    "Semaphor library for OSUE @ TU-WIEN")
 set (CPACK_PACKAGE_VERSION_MAJOR "${LIB_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${LIB_VERSION_MINOR}")
+set (CPACK_PACKAGE_VERSION_PATCH "${LIB_VERSION_PATCH}")
 
 #set (CPACK_SOURCE_IGNORE_FILES "/CMakeFiles/;\\\\.cmake\$;CMakeCache.txt;\\\\.a\$")
 
