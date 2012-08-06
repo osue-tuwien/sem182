@@ -1,241 +1,200 @@
-.\" sem182 manual page
-.\" written by Ondrej Hosek
-.\"
-.TH SEM182 3 2012-01-22 sem182 E182
+.TH SEM182 3 "July 12, 2012" "SEM182 User Manual"
 .SH NAME
-seminit, semgrab, semrm, V, P \- semaphore convenience operations
+.PP
+seminit, semgrab, semrm, V, P - semaphore convenience operations
 .SH SYNOPSIS
+.IP
 .nf
-.B #include <sem182.h>
-.sp
-.BI "int seminit(key_t " key ", int " semperm ", int " initval );
-.BI "int semgrab(key_t " key );
-.BI "int semrm(int " semid );
+\f[C]
+#include\ <sem182.h>
 
-.BI "int V(int " semid );
-.BI "int P(int " semid );
+int\ seminit(key_t\ key,\ int\ semperm,\ int\ initval);
+int\ semgrab(key_t\ key);
+int\ semrm(int\ semid);
+
+int\ V(int\ semid);
+int\ P(int\ semid);
+
+Link\ with\ -lsem182.
+\f[]
 .fi
-.sp
-Link with \fI\-lsem182\fP.
 .SH DESCRIPTION
-The
-.BR seminit ()
-function creates a new semaphore with the given
-.I key
-and permissions as specified in
-.IR semperm ,
-and initializes it with the value of
-.IR initval .
-The function fails if a semaphore associated with
-.I key
-already exists.
 .PP
-The
-.BR semgrab ()
-function obtains the semaphore associated with the given
-.IR key .
-The function fails if a semaphore associated with
-.I key
-has not been created yet.
+The \f[B]seminit\f[]() function creates a new semaphore with the given
+\f[I]key\f[] and permissions as specified in \f[I]semperm\f[], and
+initializes it with the value of \f[I]initval\f[].
+The function fails if a semaphore associated with \f[I]key\f[] already
+exists.
 .PP
-The
-.BR semrm ()
-function removes the semaphore identified by the given
-.IR semid .
-It fails if a semaphore with the given ID does not exist (or has
-already been removed).
+The \f[B]semgrab\f[]() function obtains the semaphore associated with
+the given \f[I]key\f[].
+The function fails if a semaphore associated with \f[I]key\f[] has not
+been created yet.
 .PP
-The
-.BR V ()
-function increments the value of the semaphore identified by
-.I semid
-atomically by one. If a process is waiting on the semaphore, this
-process is unblocked; if multiple processes are waiting on it,
-exactly one is unblocked; it is unspecified which.
+The \f[B]semrm\f[]() function removes the semaphore identified by the
+given \f[I]semid\f[].
+It fails if a semaphore with the given ID does not exist (or has already
+been removed).
 .PP
-The
-.BR P ()
-function attempts to decrement the value of the semaphore identified
-by
-.I semid
-atomically by one. If the semaphore's value is already zero,
-.BR P ()
-blocks until the value becomes greater than zero, whereupon the
-.BR P ()
-function decrements it atomically and returns.
-.SH "RETURN VALUE"
-On success, the
-.BR seminit ()
-function returns the ID of the newly created semaphore; the
-.BR semgrab ()
-function returns the ID of the existing semaphore associated with
-.IR key .
-On error, these functions return \-1 and set
-.I errno
-to indicate the error.
+The \f[B]V\f[]() function increments the value of the semaphore
+identified by \f[I]semid\f[] atomically by one.
+If a process is waiting on the semaphore, this process is unblocked; if
+multiple processes are waiting on it, exactly one is unblocked; it is
+unspecified which.
 .PP
-The
-.BR semrm ()
-function returns 0 if the semaphore was successfully removed.
-Otherwise, \-1 is returned and
-.I errno
-is set to indicate the error.
+The \f[B]P\f[]() function attempts to decrement the value of the
+semaphore identified by \f[I]semid\f[] atomically by one.
+If the value of the semaphore is already zero, \f[B]P\f[]() blocks until
+the value becomes greater than zero, whereupon the \f[B]P\f[]() function
+decrements it atomically and returns.
+.SH RETURN VALUE
 .PP
-The
-.BR V ()
-and
-.BR P ()
-functions return 0 if the semaphore's value was successfully
-adjusted. Otherwise, \-1 is returned and
-.I errno
-is set to indicate the error.
+On success, the \f[B]seminit\f[]() function returns the ID of the newly
+created semaphore; the \f[B]semgrab\f[]() function returns the ID of the
+existing semaphore associated with key.
+On error, these functions return -1 and set \f[I]errno\f[] to indicate
+the error.
+.PP
+The \f[B]semrm\f[]() function returns 0 if the semaphore was
+successfully removed.
+Otherwise, -1 is returned and \f[I]errno\f[] is set to indicate the
+error.
+.PP
+The V() and P() functions return 0 if the semaphore\[aq]s value was
+successfully adjusted.
+Otherwise, -1 is returned and errno is set to indicate the error.
 .SH ERRORS
-The
-.BR seminit ()
-function may fail and set
-.I errno
-for any of the errors specified for the routines
-.BR semget (2)
-and
-.BR semctl (2).
 .PP
-The
-.BR semgrab ()
-function may fail and set
-.I errno
-for any of the errors specified for the routine
-.BR semget (2).
+The \f[B]seminit\f[]() function may fail and set \f[I]errno\f[] for any
+of the errors specified for the routines \f[B]semget\f[](2) and
+\f[B]semctl\f[](2).
 .PP
-The
-.BR semrm ()
-function may fail and set
-.I errno
-for any of the errors specified for the routine
-.BR semctl (2).
+The \f[B]semgrab\f[]() function may fail and set \f[I]errno\f[] for any
+of the errors specified for the routine \f[I]semget\f[](2).
 .PP
-The functions
-.BR V ()
-and
-.BR P ()
-may fail and set
-.I errno
-for any of the errors specified for the routine
-.BR semop (2).
+The \f[B]semrm\f[]() function may fail and set \f[I]errno\f[] for any of
+the errors specified for the routine \f[B]semctl\f[](2).
+.PP
+The functions \f[B]V(\f[]) and \f[B]P\f[]() may fail and set
+\f[I]errno\f[] for any of the errors specified for the routine
+\f[B]semop\f[](2).
 .SH NOTES
-The function
-.BR P ()
-may be interrupted by a signal. It is important to check its return
-value to ensure proper synchronization.
 .PP
-The command
-.BR ipcs (1)
-can be used to list, among other things, all active semaphores; its
-companion,
-.BR ipcrm (1),
-to delete them.
+The function \f[B]P\f[]() may be interrupted by a signal.
+It is important to check its return value to ensure proper
+synchronization.
+.PP
+The command \f[B]ipcs\f[](1) can be used to list, among other things,
+all active semaphores; its companion, \f[B]ipcrm\f[](1), to delete them.
 .SH EXAMPLE
+.PP
 The following example demonstrates turn-by-turn synchronization of two
-processes. The semaphores are created and destroyed by the server; the
-first turn is made by the client.
+processes.
+The semaphores are created and destroyed by the server; the first turn
+is made by the client.
 .SS Server program
-\&
+.IP
 .nf
-#include <stdio.h>
-#include <errno.h>
-#include <sem182.h>
+\f[C]
+#include\ <stdio.h>
+#include\ <errno.h>
+#include\ <sem182.h>
 
-int main(void)
+int\ main(void)
 {
-    int s1 = seminit(0xE1820, 0600, 0);
-    if (s1 == -1) {
-        perror("seminit(s1)");
-        return 1;
-    }
+\ \ \ int\ s1\ =\ seminit(0xE1820,\ 0600,\ 0);
+\ \ \ if\ (s1\ ==\ -1)\ {
+\ \ \ \ \ \ perror("seminit(s1)");
+\ \ \ \ \ \ return\ 1;
+\ \ \ }
 
-    int s2 = seminit(0xE1821, 0600, 1);
-    if (s2 == -1) {
-        perror("seminit(s2)");
-        semrm(s1);
-        return 1;
-    }
+\ \ \ int\ s2\ =\ seminit(0xE1821,\ 0600,\ 1);
+\ \ \ if\ (s2\ ==\ -1)\ {
+\ \ \ \ \ \ perror("seminit(s2)");
+\ \ \ \ \ \ semrm(s1);
+\ \ \ \ \ \ return\ 1;
+\ \ \ }
 
-    for (;;) {
-        if (P(s1) != 0) {
-            if (errno == EINTR) {
-                /* interrupted by syscall, try again */
-                continue;
-            }
-            perror("P(s1)");
-            break;
-        }
+\ \ \ for\ (;;)\ {
+\ \ \ \ \ \ if\ (P(s1)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ if\ (errno\ ==\ EINTR)\ {
+\ \ \ \ \ \ \ \ \ \ \ \ /*\ interrupted\ by\ syscall,\ try\ again\ */
+\ \ \ \ \ \ \ \ \ \ \ \ continue;
+\ \ \ \ \ \ \ \ \ }
+\ \ \ \ \ \ \ \ \ perror("P(s1)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
 
-        /* critical section here */
+\ \ \ \ \ \ /*\ critical\ section\ here\ */
 
-        if (V(s2) != 0) {
-            perror("V(s2)");
-            break;
-        }
-    }
+\ \ \ \ \ \ if\ (V(s2)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ perror("V(s2)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
+\ \ \ }
 
-    /* clean up semaphores */
-    if (semrm(s1) != 0) {
-        perror("semrm(s1)");
-    }
-    if (semrm(s2) != 0) {
-        perror("semrm(s2)");
-    }
+\ \ \ /*\ clean\ up\ semaphores\ */
+\ \ \ if\ (semrm(s1)\ !=\ 0)\ {
+\ \ \ \ \ \ perror("semrm(s1)");
+\ \ \ }
+\ \ \ if\ (semrm(s2)\ !=\ 0)\ {
+\ \ \ \ \ \ perror("semrm(s2)");
+\ \ \ }
 
-    return 0;
+\ \ \ return\ 0;
 }
+\f[]
 .fi
 .SS Client program
-\&
+.IP
 .nf
-#include <stdio.h>
-#include <errno.h>
-#include <sem182.h>
+\f[C]
+#include\ <stdio.h>
+#include\ <errno.h>
+#include\ <sem182.h>
 
-int main(void)
+int\ main(void)
 {
-    int s1 = semgrab(0xE1820);
-    int s2 = semgrab(0xE1821);
-    if (s1 == -1 || s2 == -1) {
-        perror("semgrab");
-        return 1;
-    }
+\ \ \ int\ s1\ =\ semgrab(0xE1820);
+\ \ \ int\ s2\ =\ semgrab(0xE1821);
+\ \ \ if\ (s1\ ==\ -1\ ||\ s2\ ==\ -1)\ {
+\ \ \ \ \ \ perror("semgrab");
+\ \ \ \ \ \ return\ 1;
+\ \ \ }
 
-    for (;;) {
-        if (P(s2) != 0) {
-            if (errno == EINTR) {
-                /* interrupted by syscall, try again */
-                continue;
-            }
-            perror("P(s2)");
-            break;
-        }
+\ \ \ for\ (;;)\ {
+\ \ \ \ \ \ if\ (P(s2)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ if\ (errno\ ==\ EINTR)\ {
+\ \ \ \ \ \ \ \ \ \ \ \ /*\ interrupted\ by\ syscall,\ try\ again\ */
+\ \ \ \ \ \ \ \ \ \ \ \ continue;
+\ \ \ \ \ \ \ \ \ }
+\ \ \ \ \ \ \ \ \ perror("P(s2)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
 
-        /* critical section here */
+\ \ \ \ \ \ /*\ critical\ section\ here\ */
 
-        if (V(s1) != 0) {
-            perror("V(s1)");
-            break;
-        }
-    }
+\ \ \ \ \ \ if\ (V(s1)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ perror("V(s1)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
+\ \ \ }
 
-    return 0;
+\ \ \ return\ 0;
 }
+\f[]
 .fi
-.SH "SEE ALSO"
-.BR ipcs (1),
-.BR ipcrm (1),
-.BR semctl (2),
-.BR semget (2),
-.BR semop (2),
-.BR msem182 (3)
+.SH SEE ALSO
+.PP
+\f[B]ipcs\f[](1), \f[B]ipcrm\f[](1), \f[B]semctl\f[](2),
+\f[B]semget\f[](2), \f[B]semop\f[](2), \f[B]msem182\f[](3)
 .SH COLOPHON
-The
-.I sem182
-library was implemented by Guenther Leber, Heinz Kantz and Raimund
-Kirner, with contributions from Peter Holzer, Gerhard J. Fohler and
-possibly Gustav Pospischil. This manual page was written by
-Ond\[u0159]ej Ho\[u0161]ek.
+.PP
+The \f[I]sem182\f[] library was implemented by Guenther Leber, Heinz
+Kantz and Raimund Kirner, with contributions from Peter Holzer, Gerhard
+J.
+Fohler and possibly Gustav Pospischil.
+The initial manual page was improved and rewritten by Ondrej Hosek and
+pandoc\[aq]ed by Roland Kammerer.
+.SH AUTHORS
+Ondrej Hosek, Roland Kammerer.

@@ -1,257 +1,206 @@
-.\" msem182 manual page
-.\" written by Ondrej Hosek
-.\"
-.TH MSEM182 3 2012-01-22 sem182 E182
+.TH MSEM182 3 "July 12, 2012" "MSEM182 User Manual"
 .SH NAME
-mseminit, msemgrab, msemrm, mV, mP \- semaphore field convenience
+.PP
+mseminit, msemgrab, msemrm, mV, mP - semaphore field convenience
 operations
 .SH SYNOPSIS
+.IP
 .nf
-.B #include <msem182.h>
-.sp
-.BI "int mseminit(key_t " key ", int " perm ", int " nsems ", ...);
-.BI "int msemgrab(key_t " key ", int " nsems );
-.BI "int msemrm(int " semid );
+\f[C]
+#include\ <msem182.h>
 
-.BI "int mV(int " semid ", int " nsems ", ...);
-.BI "int mP(int " semid ", int " nsems ", ...);
+int\ mseminit(key_t\ key,\ int\ perm,\ int\ nsems,\ ...);
+int\ msemgrab(key_t\ key,\ int\ nsems);
+int\ msemrm(int\ semid);
+
+int\ mV(int\ semid,\ int\ nsems,\ ...);
+int\ mP(int\ semid,\ int\ nsems,\ ...);
+
+Link\ with\ -lsem182.
+\f[]
 .fi
-.sp
-Link with \fI\-lmsem182\fP.
 .SH DESCRIPTION
-The
-.BR mseminit ()
-function creates a new semaphore field with the given
-.I key
-and permissions as specified in
-.IR perm .
-The number of semaphores is specified in
-.IR nsems ;
-the ellipsis represents the argument sequence of initial values for
-each of the semaphores in the field.
-The function fails if a semaphore field associated with
-.I key
+.PP
+The \f[B]mseminit\f[]() function creates a new semaphore field with the
+given \f[I]key\f[] and permissions as specified in \f[I]perm\f[].
+The number of semaphores is specified in \f[I]nsems\f[]; the ellipsis
+represents the argument sequence of initial values for each of the
+semaphores in the field.
+The function fails if a semaphore field associated with \f[I]key\f[]
 already exists.
 .PP
-The
-.BR msemgrab ()
-function obtains the semaphore field associated with the given
-.IR key .
-The
-.I nsems
-argument is essentially superfluous and should be specified as 0. The
-function fails if a semaphore field associated with
-.I key
-has not been created yet.
+The \f[B]msemgrab\f[]() function obtains the semaphore field associated
+with the given \f[I]key\f[].
+The \f[I]nsems\f[] argument is essentially superfluous and should be
+specified as 0.
+The function fails if a semaphore field associated with \f[I]key\f[] has
+not been created yet.
 .PP
-The
-.BR msemrm ()
-function removes the semaphore field identified by
-.IR semid .
+The \f[B]msemrm\f[]() function removes the semaphore field identified by
+\f[I]semid\f[].
 It fails if a semaphore field by the given ID does not exist (or has
 already been removed).
 .PP
-The
-.BR mV ()
-function increments the value of some semaphores in the field
-identified by
-.I semid
-atomically by one. The number of semaphores whose values to increment
-is specified in
-.IR nsems ,
-which must be followed by a list of indices representing these
-semaphores within the field. If a process is waiting on any of the
-semaphores, this process is unblocked; if multiple processes are
-waiting on it, exactly one is unblocked; it is unspecified which.
+The \f[B]mV\f[]() function increments the value of some semaphores in
+the field identified by \f[I]semid\f[] atomically by one.
+The number of semaphores whose values to increment is specified in
+\f[I]nsems\f[], which must be followed by a list of indices representing
+these semaphores within the field.
+If a process is waiting on any of the semaphores, this process is
+unblocked; if multiple processes are waiting on it, exactly one is
+unblocked; it is unspecified which.
 .PP
-The
-.BR mP ()
-function attempts to decrement the value of some semaphores in the
-field identified by
-.I semid
-atomically by one. The number of semaphores whose values to decrement
-is specified in
-.IR nsems ,
-which must be followed by a list of indices representing these
-semaphores within the field. The atomicity extends to the whole
-operation: if the value of any of the referenced semaphores is already
-zero,
-.BR mP ()
-doesn't decrement any of the semaphores and blocks until the value
-of all referenced semaphores is greater than zero, whereupon it
-decrements all the values simultaneously and returns.
-.SH "RETURN VALUE"
-On success, the
-.BR mseminit ()
-function returns the ID of the newly created semaphore field; the
-.BR msemgrab ()
-function returns the ID of the existing semaphore field associated
-with
-.IR key .
-On error, these functions return \-1 and set
-.I errno
-to indicate the error.
+The \f[B]mP\f[]() function attempts to decrement the value of some
+semaphores in the field identified by \f[I]semid\f[] atomically by one.
+The number of semaphores whose values to decrement is specified in
+\f[I]nsems\f[], which must be followed by a list of indices representing
+these semaphores within the field.
+The atomicity extends to the whole operation: if the value of any of the
+referenced semaphores is already zero,\f[B]mP\f[]() doesn\[aq]t
+decrement any of the semaphores and blocks until the value of all
+referenced semaphores is greater than zero, whereupon it decrements all
+the values simultaneously and returns.
+.SH RETURN VALUE
 .PP
-The
-.BR msemrm ()
-function returns 0 if the semaphore field was successfully removed.
-Otherwise, \-1 is returned and
-.I errno
-is set to indicate the error.
+On success, the \f[B]mseminit\f[]() function returns the ID of the newly
+created semaphore field; the \f[B]msemgrab\f[]() function returns the ID
+of the existing semaphore field associated with \f[I]key\f[].
+On error, these functions return -1 and set \f[I]errno\f[] to indicate
+the error.
 .PP
-The
-.BR mV ()
-and
-.BR mP ()
-functions return 0 if the values of the semaphores have been
-successfully adjusted. Otherwise, \-1 is returned and
-.I errno
-is set to indicate the error.
+The \f[B]msemrm\f[]() function returns 0 if the semaphore field was
+successfully removed.
+Otherwise, -1 is returned and \f[I]errno\f[] is set to indicate the
+error.
+.PP
+The \f[B]mV\f[]() and \f[B]mP\f[]() functions return 0 if the values of
+the semaphores have been successfully adjusted.
+Otherwise, -1 is returned and \f[I]errno\f[] is set to indicate the
+error.
 .SH ERRORS
-The
-.BR mseminit ()
-function may fail and set
-.I errno
-for any of the errors specified for the routines
-.BR semget (2)
-and
-.BR semctl (2).
 .PP
-The
-.BR msemgrab ()
-function may fail and set
-.I errno
-for any of the errors specified for the routine
-.BR semget (2).
+The \f[B]mseminit\f[]() function may fail and set \f[I]errno\f[] for any
+of the errors specified for the routines \f[B]semget\f[](2) and
+\f[B]semctl\f[](2).
 .PP
-The
-.BR msemrm ()
-function may fail and set
-.I errno
-for any of the errors specified for the routine
-.BR semctl (2).
+The \f[B]msemgrab\f[]() function may fail and set \f[I]errno\f[] for any
+of the errors specified for the routine \f[B]semget\f[](2).
 .PP
-The functions
-.BR mV ()
-and
-.BR mP ()
-may fail and set
-.I errno
-for any of the errors specified for the routine
-.BR semop (2).
+The \f[B]msemrm\f[]() function may fail and set \f[I]errno\f[] for any
+of the errors specified for the routine \f[B]semctl\f[](2).
+.PP
+The functions \f[B]mV\f[]() and \f[B]mP\f[]() may fail and set
+\f[I]errno\f[] for any of the errors specified for the routine
+\f[B]semop\f[](2).
 .SH NOTES
-The function
-.BR mP ()
-may be interrupted by a signal. It is important to check its return
-value to ensure proper synchronization.
 .PP
-The command
-.BR ipcs (1)
-can be used to list, among other things, all active semaphores; its
-companion,
-.BR ipcrm (1),
-to delete them.
+The function \f[B]mP\f[]() may be interrupted by a signal.
+It is important to check its return value to ensure proper
+synchronization.
 .PP
-Semaphores created by the companion library
-.BR sem182 (3)
-are considered fields with one semaphore by
-.BR msem182 .
-However, using
-.BR sem182
-and
-.BR msem182
-simultaneously is strongly discouraged.
+The command \f[B]ipcs\f[](1) can be used to list, among other things,
+all active semaphores; its companion, \f[B]ipcrm\f[](1), to delete them.
+.PP
+Semaphores created by the companion library \f[B]sem182\f[](3) are
+considered fields with one semaphore by \f[B]msem182\f[].
+However, using \f[B]sem182\f[] and \f[B]msem182\f[] simultaneously is
+strongly discouraged.
 .SH EXAMPLE
+.PP
 The following example demonstrates turn-by-turn synchronization of two
-processes. The semaphores are created and destroyed by the server; the
-first turn is made by the client.
+processes.
+The semaphores are created and destroyed by the server; the first turn
+is made by the client.
 .SS Server program
-\&
+.IP
 .nf
-#include <stdio.h>
-#include <errno.h>
-#include <msem182.h>
+\f[C]
+#include\ <stdio.h>
+#include\ <errno.h>
+#include\ <msem182.h>
 
-int main(void)
+int\ main(void)
 {
-    int s = mseminit(0xE1820, 0600, 2, 0, 1);
-    if (s == -1) {
-        perror("mseminit");
-        return 1;
-    }
+\ \ \ int\ s\ =\ mseminit(0xE1820,\ 0600,\ 2,\ 0,\ 1);
+\ \ \ if\ (s\ ==\ -1)\ {
+\ \ \ \ \ \ perror("mseminit");
+\ \ \ \ \ \ return\ 1;
+\ \ \ }
 
-    for (;;) {
-        if (mP(s, 1, 0) != 0) {
-            if (errno == EINTR) {
-                /* interrupted by syscall, try again */
-                continue;
-            }
-            perror("mP(0)");
-            break;
-        }
+\ \ \ for\ (;;)\ {
+\ \ \ \ \ \ if\ (mP(s,\ 1,\ 0)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ if\ (errno\ ==\ EINTR)\ {
+\ \ \ \ \ \ \ \ \ \ \ \ /*\ interrupted\ by\ syscall,\ try\ again\ */
+\ \ \ \ \ \ \ \ \ \ \ \ continue;
+\ \ \ \ \ \ \ \ \ }
+\ \ \ \ \ \ \ \ \ perror("mP(0)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
 
-        /* critical section here */
+\ \ \ \ \ \ /*\ critical\ section\ here\ */
 
-        if (mV(s, 1, 1) != 0) {
-            perror("mV(1)");
-            break;
-        }
-    }
+\ \ \ \ \ \ if\ (mV(s,\ 1,\ 1)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ perror("mV(1)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
+\ \ \ }
 
-    /* clean up semaphores */
-    if (msemrm(s) != 0) {
-        perror("msemrm");
-    }
+\ \ \ /*\ clean\ up\ semaphores\ */
+\ \ \ if\ (msemrm(s)\ !=\ 0)\ {
+\ \ \ \ \ \ perror("msemrm");
+\ \ \ }
 
-    return 0;
+\ \ \ return\ 0;
 }
+\f[]
 .fi
 .SS Client program
-\&
+.IP
 .nf
-#include <stdio.h>
-#include <errno.h>
-#include <msem182.h>
+\f[C]
+#include\ <stdio.h>
+#include\ <errno.h>
+#include\ <msem182.h>
 
-int main(void)
+int\ main(void)
 {
-    int s = msemgrab(0xE1820, 0);
-    if (s == -1) {
-        perror("msemgrab");
-        return 1;
-    }
+\ \ \ int\ s\ =\ msemgrab(0xE1820,\ 0);
+\ \ \ if\ (s\ ==\ -1)\ {
+\ \ \ \ \ \ perror("msemgrab");
+\ \ \ \ \ \ return\ 1;
+\ \ \ }
 
-    for (;;) {
-        if (mP(s, 1, 1) != 0) {
-            if (errno == EINTR) {
-                /* interrupted by syscall, try again */
-                continue;
-            }
-            perror("mP(1)");
-            break;
-        }
+\ \ \ for\ (;;)\ {
+\ \ \ \ \ \ if\ (mP(s,\ 1,\ 1)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ if\ (errno\ ==\ EINTR)\ {
+\ \ \ \ \ \ \ \ \ \ \ \ /*\ interrupted\ by\ syscall,\ try\ again\ */
+\ \ \ \ \ \ \ \ \ \ \ \ continue;
+\ \ \ \ \ \ \ \ \ }
+\ \ \ \ \ \ \ \ \ perror("mP(1)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
 
-        /* critical section here */
+\ \ \ \ \ \ /*\ critical\ section\ here\ */
 
-        if (mV(s, 1, 0) != 0) {
-            perror("mV(0)");
-            break;
-        }
-    }
+\ \ \ \ \ \ if\ (mV(s,\ 1,\ 0)\ !=\ 0)\ {
+\ \ \ \ \ \ \ \ \ perror("mV(0)");
+\ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ }
+\ \ \ }
 
-    return 0;
+\ \ \ return\ 0;
 }
+\f[]
 .fi
-.SH "SEE ALSO"
-.BR ipcs (1),
-.BR ipcrm (1),
-.BR semctl (2),
-.BR semget (2),
-.BR semop (2),
-.BR sem182 (3)
+.SH SEE ALSO
+.PP
+\f[B]ipcs\f[](1), \f[B]ipcrm\f[](1), \f[B]semctl\f[](2),
+\f[B]semget\f[](2), \f[B]semop\f[](2), \f[B]sem182\f[](3)
 .SH COLOPHON
-The
-.I msem182
-library was implemented by Peter Holzer, deriving work by Guenther
-Leber, Heinz Kantz, Raimund Kirner and Gustav Pospischil. This manual
-page was written by Ond\[u0159]ej Ho\[u0161]ek.
+.PP
+The msem182 library was implemented by Peter Holzer, deriving work by
+Guenther Leber, Heinz Kantz, Raimund Kirner and Gustav Pospischil.
+The initial manual page was improved and rewritten by Ondrej Hosek and
+pandoc\[aq]ed by Roland Kammerer.
+.SH AUTHORS
+Ondrej Hosek, Roland Kammerer.
