@@ -1,4 +1,4 @@
-char msem182_c_sccs_id [] = 
+static char msem182_c_sccs_id [] = 
 	"@(#)	msem182.c	2.5	2002/03/05	rk";
 /*
  * Purpose: 	Convenience functions for Semaphores
