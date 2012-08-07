@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (libsem182 C)
 
 set (LIB_VERSION_MAJOR "2")
-set (LIB_VERSION_MINOR "1")
+set (LIB_VERSION_MINOR "3")
 set (LIB_VERSION_PATCH "1")
 
 include_directories (${CMAKE_SOURCE_DIR})
