@@ -18,7 +18,7 @@ ADD_LIBRARY( sem182 STATIC
 
 # build a CPack driven installer package
 # generall:
-set (CPACK_PACKAGE_NAME "libsem182")
+set (CPACK_PACKAGE_NAME "osue-${CMAKE_PROJECT_NAME}")
 set (CPACK_PACKAGE_CONTACT 
    "OSUE TEAM <osue-team@vmars.tuwien.ac.at>")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY 
@@ -27,10 +27,7 @@ set (CPACK_PACKAGE_VERSION_MAJOR "${LIB_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${LIB_VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${LIB_VERSION_PATCH}")
 
-#set (CPACK_SOURCE_IGNORE_FILES "/CMakeFiles/;\\\\.cmake\$;CMakeCache.txt;\\\\.a\$")
-
 # RPM specific
-set (CPACK_RPM_PACKAGE_NAME "sysprog-${CPACK_PACKAGE_NAME}")
 set (CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
 
 include (CPack)
