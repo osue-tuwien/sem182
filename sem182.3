@@ -1,7 +1,8 @@
 .TH SEM182 3 "July 12, 2012" "SEM182 User Manual"
 .SH NAME
 .PP
-seminit, semgrab, semrm, V, P - semaphore convenience operations
+seminit, semgrab, semrm, V/semup, P/semdown - semaphore convenience
+operations
 .SH SYNOPSIS
 .IP
 .nf
@@ -47,6 +48,9 @@ semaphore identified by \f[I]semid\f[] atomically by one.
 If the value of the semaphore is already zero, \f[B]P\f[]() blocks until
 the value becomes greater than zero, whereupon the \f[B]P\f[]() function
 decrements it atomically and returns.
+.PP
+The \f[B]semup\f[]() and \f[B]semdown\f[]() functions are aliases to
+\f[B]V\f[]() and \f[B]P\f[]().
 .SH RETURN VALUE
 .PP
 On success, the \f[B]seminit\f[]() function returns the ID of the newly

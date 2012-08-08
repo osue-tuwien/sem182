@@ -4,7 +4,7 @@
 
 # NAME
 
-mseminit, msemgrab, msemrm, mV, mP - semaphore field convenience operations
+mseminit, msemgrab, msemrm, mV/msemup, mP/msemdown - semaphore field convenience operations
 
 # SYNOPSIS
     #include <msem182.h>
@@ -47,9 +47,11 @@ field identified by *semid* atomically by one. The number of semaphores whose
 values to decrement is specified in *nsems*, which must be followed by a list
 of indices representing these semaphores within the field. The atomicity
 extends to the whole operation: if the value of any of the referenced
-semaphores is already zero,**mP**() doesn't decrement any of the semaphores and
+semaphores is already zero, **mP**() doesn't decrement any of the semaphores and
 blocks until the value of all referenced semaphores is greater than zero,
 whereupon it decrements all the values simultaneously and returns.
+
+The **msemup**() and **msemdown**() functions are aliases to **mV**() and **mP**().
 
 # RETURN VALUE
 
