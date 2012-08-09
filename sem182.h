@@ -10,6 +10,9 @@
 #define semup(s) V(s)
 #define semdown(s) P(s)
 
+#define semverhogen(s) V(s)
+#define semprolaag(s) P(s)
+
 #include <sys/types.h>
 
 /* sem182.c */
