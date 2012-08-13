@@ -31,7 +31,7 @@ int mseminit( key_t key, int perm, int nsems, ...)
     int     semid;
     union semun semarg;
     va_list ap;
-    int     i, initval;
+    int     i;
 
     if (
         (semid = semget (key, nsems, IPC_CREAT | IPC_EXCL | (perm & 0666)))
