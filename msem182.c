@@ -1,25 +1,3 @@
-static char msem182_c_sccs_id [] = 
-	"@(#)	msem182.c	2.5	2002/03/05	rk";
-/*
- * Purpose: 	Convenience functions for Semaphores
- *
- * Motivation:	The semop function is hard to use and provides
- *              functionality which is seldom used or even annoying
- *		(like the fact that 0 isn't a nop). These functions
- *		should provide a cleaner interface.
- *
- * Modification history:
- *  2.5 Use of semctl with enum semun
- *	2.2	Changed order of parameters in mseminit.
- *	2.1	Changed the semantics of mP and mV. The arguments now
- *		specify the index of the semaphore to operate on, 
- *		not the operation.
- *	1.1	got the version from the solution to Ex. 2.11 
- *		(which was derived from an out-of-date version of 
- *		sem182.c which had been heavily hacked by gusti) and
- *		adapted it to the STBS and the newest version of
- *		sem182.c.
- */
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
