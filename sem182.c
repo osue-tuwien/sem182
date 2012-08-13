@@ -1,24 +1,3 @@
-/*******************************************************************************
-*                                                                              *
-*     Author:      G. Leber                                                    *
-*                  H. Kantz                                                    *
-*                  Technische Universitaet Wien                                *
-*                  Institut fuer Technische Informatik E182/1                  *
-*                  Treitlstrasse 3                                             *
-*                  1040 Wien                                                   *
-*                  Tel.: (0222) 58801 / 8176                                   *
-*                  E-Mail: guenther@vmars.tuwien.ac.at                         *
-*     Update:      R. Kirner (use of semctl with enum semun)                   *
-*     File:        sem182.c						                               *
-*     Version:     2.3							                               *
-*     Date:        3/5/02						                               *
-*                                                                              *
-*******************************************************************************/
-
-#ifndef lint
-static char	sem182_c_sccsID[] = "@(#)sem182.c	2.2	6/27/94";
-#endif /* lint */
-
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
