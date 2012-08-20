@@ -20,6 +20,7 @@ $ sudo make install
 
 Debug/Test Builds
 -----------------
+```
 $ cd build
 $ cmake -D CMAKE_BUILD_TYPE=debug ..
 $ make
