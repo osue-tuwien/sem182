@@ -104,5 +104,10 @@ int main(void)
 
    printf("\n");
 
-   return (server_s + client_s);
+   int ret = EXIT_FAILURE;
+   if (server_s == 0 && client_s == 0) {
+      ret = EXIT_SUCCESS;
+   }
+
+   return ret;
 }
