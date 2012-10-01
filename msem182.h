@@ -21,6 +21,8 @@
  *		sem182.c.
  */
 #include <sys/types.h>
+#define msemup(a, b, ...) mV(a, b, __VA_ARGS__)
+#define msemdown(a, b, ...) mP(a, b, __VA_ARGS__)
 
 /*** function mseminit
  * 

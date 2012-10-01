@@ -1,4 +1,4 @@
-foreach(page IN ITEMS P V seminit semgrab semrm)
+foreach(page IN ITEMS P V semup semdown seminit semgrab semrm)
    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink 
    sem182.3 
    ${page}.3 

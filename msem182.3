@@ -1,8 +1,8 @@
 .TH MSEM182 3 "July 12, 2012" "MSEM182 User Manual"
 .SH NAME
 .PP
-mseminit, msemgrab, msemrm, mV, mP - semaphore field convenience
-operations
+mseminit, msemgrab, msemrm, mV/msemup, mP/msemdown - semaphore field
+convenience operations
 .SH SYNOPSIS
 .IP
 .nf
@@ -56,10 +56,13 @@ The number of semaphores whose values to decrement is specified in
 \f[I]nsems\f[], which must be followed by a list of indices representing
 these semaphores within the field.
 The atomicity extends to the whole operation: if the value of any of the
-referenced semaphores is already zero,\f[B]mP\f[]() doesn\[aq]t
+referenced semaphores is already zero, \f[B]mP\f[]() doesn\[aq]t
 decrement any of the semaphores and blocks until the value of all
 referenced semaphores is greater than zero, whereupon it decrements all
 the values simultaneously and returns.
+.PP
+The \f[B]msemup\f[]() and \f[B]msemdown\f[]() functions are aliases to
+\f[B]mV\f[]() and \f[B]mP\f[]().
 .SH RETURN VALUE
 .PP
 On success, the \f[B]mseminit\f[]() function returns the ID of the newly
