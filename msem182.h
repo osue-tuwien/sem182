@@ -35,7 +35,7 @@
  * Returns: Semaphore descriptor or -1 in case of error.
  */
 
-int mseminit( key_t key, int perm, int nsems, ...);
+int mseminit(key_t key, int perm, int nsems, ...);
 
 
 /*** function msemgrab
@@ -45,7 +45,7 @@ int mseminit( key_t key, int perm, int nsems, ...);
  *		nsems	number of semaphores in the SF
  * Returns:	semid or -1 in case of error
  */
-int msemgrab (key_t key, int nsems);
+int msemgrab(key_t key, int nsems);
 
 
 /*** function msemrm

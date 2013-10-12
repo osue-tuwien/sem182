@@ -18,7 +18,7 @@
  * Returns: Semaphore descriptor or -1 in case of error.
  */
 
-int mseminit( key_t key, int perm, int nsems, ...)
+int mseminit(key_t key, int perm, int nsems, ...)
 {
 #if !defined(__GNU_LIBRARY__) || defined(_SEM_SEMUN_UNDEFINED)
      union semun {
@@ -34,7 +34,7 @@ int mseminit( key_t key, int perm, int nsems, ...)
     int     i;
 
     if (
-        (semid = semget (key, nsems, IPC_CREAT | IPC_EXCL | (perm & 0666)))
+        (semid = semget(key, nsems, IPC_CREAT | IPC_EXCL | (perm & 0666)))
 
         < 0
        )
@@ -46,8 +46,8 @@ int mseminit( key_t key, int perm, int nsems, ...)
     va_start (ap, nsems);
     for (i = 0; i < nsems; i ++) 
     {
-        semarg.val = va_arg (ap, int);
-        if (semctl (semid, i, SETVAL, semarg) < 0) 
+        semarg.val = va_arg(ap, int);
+        if (semctl(semid, i, SETVAL, semarg) < 0) 
         {
            int save_errno = errno;
            (void) msemrm(semid);
@@ -68,9 +68,9 @@ int mseminit( key_t key, int perm, int nsems, ...)
  *		nsems	number of semaphores in the SF
  * Returns:	semid or -1 in case of error
  */
-int msemgrab (key_t key, int nsems)
+int msemgrab(key_t key, int nsems)
 {
-	return semget (key, nsems, 0);
+	return semget(key, nsems, 0);
 }
 
 
@@ -81,7 +81,7 @@ int msemgrab (key_t key, int nsems)
  */
 int msemrm(int semid) 
 {
-    return semctl (semid, 0, IPC_RMID, 0);
+    return semctl(semid, 0, IPC_RMID, 0);
 }
 
 
@@ -105,25 +105,25 @@ int mV(int semid, int nsems, ...)
     int             i;
     va_list         ap;
 
-    if ((semp = calloc (nsems, sizeof (struct sembuf))) == NULL)
+    if ((semp = calloc(nsems, sizeof (struct sembuf))) == NULL)
     {
         return -1;
     }
 
-    va_start (ap, nsems);
+    va_start(ap, nsems);
     for (i = 0; i < nsems; i ++) 
     {
-        semp[i].sem_num = va_arg (ap, int);
+        semp[i].sem_num = va_arg(ap, int);
         semp[i].sem_op = 1;
     }
-    va_end (ap);
+    va_end(ap);
 
     if (semop(semid, semp, nsems) < 0)
     {
-        free (semp);
+        free(semp);
         return -1;
     }
-    free (semp);
+    free(semp);
     return 0;
 }
 
@@ -148,24 +148,24 @@ int mP(int semid, int nsems, ...)
     int             i;
     va_list         ap;
 
-    if ((semp = calloc (nsems, sizeof (struct sembuf))) == NULL)
+    if ((semp = calloc(nsems, sizeof (struct sembuf))) == NULL)
     {
         return -1;
     }
 
-    va_start (ap, nsems);
+    va_start(ap, nsems);
     for (i = 0; i < nsems; i ++) 
     {
-        semp[i].sem_num = va_arg (ap, int);
+        semp[i].sem_num = va_arg(ap, int);
         semp[i].sem_op = -1;
     }
-    va_end (ap);
+    va_end(ap);
 
     if (semop(semid, semp, nsems) < 0)
     {
-        free (semp);
+        free(semp);
         return -1;
     }
-    free (semp);
+    free(semp);
     return 0;
 }
