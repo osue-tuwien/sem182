@@ -48,11 +48,11 @@ int semperm, initval;
  union semun semarg;
 
  semarg.val = initval;
- if ( (semid = semget (key, SEM_NR, IPC_CREAT | IPC_EXCL | (semperm & 0666)))
+ if ( (semid = semget(key, SEM_NR, IPC_CREAT | IPC_EXCL | (semperm & 0666)))
 									   < 0)
 	return(-1);
 	/* Initialize Semaphore */
- if (semctl (semid, 0, SETVAL, semarg) < 0) {
+ if (semctl(semid, 0, SETVAL, semarg) < 0) {
 	int	semctlerror = errno;	/* save error condition */
 
 	(void) semrm(semid);
@@ -73,7 +73,7 @@ key_t key;
 #endif
 
 {
- return semget (key, SEM_NR, 0);
+ return semget(key, SEM_NR, 0);
 }
 
 
