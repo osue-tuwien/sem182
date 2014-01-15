@@ -116,7 +116,7 @@ turn is made by the client.
        for (;;) {
           if (mP(s, 1, 0) != 0) {
              if (errno == EINTR) {
-                /* interrupted by syscall, try again */
+                /* syscall interrupted by signal, try again */
                 continue;
              }
              perror("mP(0)");
@@ -157,7 +157,7 @@ turn is made by the client.
        for (;;) {
           if (mP(s, 1, 1) != 0) {
              if (errno == EINTR) {
-                /* interrupted by syscall, try again */
+                /* syscall interrupted by signal, try again */
                 continue;
              }
              perror("mP(1)");

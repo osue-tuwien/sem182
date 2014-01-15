@@ -124,7 +124,7 @@ int\ main(void)
 \ \ \ for\ (;;)\ {
 \ \ \ \ \ \ if\ (P(s1)\ !=\ 0)\ {
 \ \ \ \ \ \ \ \ \ if\ (errno\ ==\ EINTR)\ {
-\ \ \ \ \ \ \ \ \ \ \ \ /*\ interrupted\ by\ syscall,\ try\ again\ */
+\ \ \ \ \ \ \ \ \ \ \ \ /*\ syscall\ interrupted\ by\ signal,\ try\ again\ */
 \ \ \ \ \ \ \ \ \ \ \ \ continue;
 \ \ \ \ \ \ \ \ \ }
 \ \ \ \ \ \ \ \ \ perror("P(s1)");
@@ -171,7 +171,7 @@ int\ main(void)
 \ \ \ for\ (;;)\ {
 \ \ \ \ \ \ if\ (P(s2)\ !=\ 0)\ {
 \ \ \ \ \ \ \ \ \ if\ (errno\ ==\ EINTR)\ {
-\ \ \ \ \ \ \ \ \ \ \ \ /*\ interrupted\ by\ syscall,\ try\ again\ */
+\ \ \ \ \ \ \ \ \ \ \ \ /*\ syscall\ interrupted\ by\ signal,\ try\ again\ */
 \ \ \ \ \ \ \ \ \ \ \ \ continue;
 \ \ \ \ \ \ \ \ \ }
 \ \ \ \ \ \ \ \ \ perror("P(s2)");
