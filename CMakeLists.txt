@@ -3,7 +3,7 @@ project (libsem182 C)
 
 set (LIB_VERSION_MAJOR "2")
 set (LIB_VERSION_MINOR "4")
-set (LIB_VERSION_PATCH "1")
+set (LIB_VERSION_PATCH "2")
 
 set (COMMON_FLAGS "-std=c99 -Wall -pedantic -D_XOPEN_SOURCE=500")
 if (CMAKE_BUILD_TYPE STREQUAL "debug")
